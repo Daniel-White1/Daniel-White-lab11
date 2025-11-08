@@ -16,10 +16,22 @@ public class Lab11_Tests {
         Lab11_Thread threadB = new Lab11_Thread("B1", 100);
 
         threadA.start();
-        threadB.start();
+        threadB.start();   
+
+        try{
+        threadA.join();
+        threadB.join();
+        } catch (Exception e){
+            System.out.println("Error occured");
+        }
+        ArrayList<String> sum = threadA.getData();
+
+        assertEquals(200, sum.size());
+        System.out.println("Target Value is: 200");
+        System.out.println("Array list size is: " + sum.size());
+        System.out.println("Lab11: Test 1 works.");
 
     }
-
     /*
         Complete the test case below that checks to see if the shared ArrayList has at least 10 entries after 500ms of system time
     */
@@ -31,14 +43,23 @@ public class Lab11_Tests {
 
         threadA.start();
         threadB.start();
+
         try {
             Thread.sleep(500); 
         } catch (Exception e){
             e.printStackTrace();
         }
+        ArrayList<String> sum = threadA.getData();
+        System.out.println("Shared Array List Size: " + sum.size());
 
+        boolean checker = false;
+        if (sum.size() > 10) {
+            checker = true;
+        }
+        assertEquals(true, checker);
+        System.out.println("Test 2 is sucessful");
     }
-
+    
     /*
         Complete the test case below that checks to see if thread A finishes adding its 10 entries before thread B was allowed to 
         add anything to the shared ArrayList
